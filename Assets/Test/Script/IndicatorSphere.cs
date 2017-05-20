@@ -1,22 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[ExecuteInEditMode]
 public class IndicatorSphere : MonoBehaviour {
 
-    private Color m_color = Color.yellow;
-    public Color SphereColor {get{ return m_color;} set{ m_color = value; m_renderer.material.color = m_color;  }}
+    public int Index { get; set; }
+    public Vector3 Position { get { return gameObject.transform.position; } }
 
-    private MeshRenderer m_renderer;
+    public delegate void IndicatorEventHandler(int a_indicatorIndex);
+    public event IndicatorEventHandler OnIndicatorMoved;
 
-    private void Awake()
+    private void Update()
     {
-        m_renderer = gameObject.GetComponent<MeshRenderer>();
-        Reset();
+        if(transform.hasChanged)
+        {
+            //Debug.Log("<color=#00ff00>Things are changing round here. Is it me? I think so!</color>");
+            if(OnIndicatorMoved != null)
+            {
+                OnIndicatorMoved(Index);
+            }
+            transform.hasChanged = false;
+        }
+
     }
 
-    public void Reset()
-    {
-        SphereColor = Color.yellow;
-    }
 }
