@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: 4ae1b244f1c021144bf42414fe16dc07
-timeCreated: 1495160300
+timeCreated: 1495273465
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - m_indicatorPrefab: {fileID: 114394850720210978, guid: 82bb81e64d33eaa49b4fb07c20e3184e,
       type: 2}
+  - m_indicatorParent: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
