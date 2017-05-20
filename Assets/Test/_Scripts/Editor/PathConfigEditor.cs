@@ -32,7 +32,6 @@ public class PathConfigEditor : Editor {
 
     public override void OnInspectorGUI()
     {
-        DrawDefaultInspector();
 
         if (GUILayout.Button("Spawn new waypoint"))
         {
@@ -72,6 +71,8 @@ public class PathConfigEditor : Editor {
             RemoveIndicators();
             SavePathToScriptableObject();
         }
+
+        DrawDefaultInspector();
 
     }
 
