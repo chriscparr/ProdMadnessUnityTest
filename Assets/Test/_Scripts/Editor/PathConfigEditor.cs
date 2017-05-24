@@ -41,6 +41,7 @@ public class PathConfigEditor : Editor {
             if (m_pathMarkers.Count > 1)
             {
                 Vector3 next = m_pathMarkers[m_pathMarkers.Count - 1].transform.position - m_pathMarkers[m_pathMarkers.Count - 2].transform.position;
+                next.y = 1.0f;
                 test.transform.position = m_pathMarkers[m_pathMarkers.Count - 1].transform.position + next;
             }
             else
@@ -61,6 +62,16 @@ public class PathConfigEditor : Editor {
                 m_pathMarkers.RemoveAt(m_pathMarkers.Count - 1);
                 SavePathToScriptableObject();
             }
+        }
+        if (GUILayout.Button("Set all points y=1"))
+        {
+            foreach(IndicatorSphere s in m_pathMarkers)
+            {
+                Vector3 pos = s.transform.position;
+                pos.y = 1.0f;
+                s.transform.position = pos;
+            }
+            Debug.Log("Done!");
         }
         if (GUILayout.Button("Save to asset"))
         {
