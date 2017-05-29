@@ -27,6 +27,10 @@ public class CarController : MonoBehaviour {
     private Vector3 m_centerOfMass;
     [SerializeField]
     private float m_brakingCoefficient = 0.5f;
+    [SerializeField]
+    private PathConfig m_pathConfig;
+    [SerializeField]
+    private MeshCollider m_carCollider;
 
     private void Awake()
     {
@@ -63,19 +67,5 @@ public class CarController : MonoBehaviour {
             m_rearRight.motorTorque = m_power;
         }
 
-        /*
-        m_brake = Input.GetKey(KeyCode.Space) ? m_carRigidBody.mass * 1f : 0f;
-
-        if(m_brake > 0f)
-        {
-            m_rearLeft.motorTorque = 0f;
-            m_rearRight.motorTorque = 0f;
-        }
-        else
-        {
-            m_rearLeft.motorTorque = m_power;
-            m_rearRight.motorTorque = m_power;
-        }
-        */
     }
 }
