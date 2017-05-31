@@ -24,11 +24,12 @@ public class PathNavigator : MonoBehaviour {
         {
             if(m_waypointIndex < m_pathConfig.PathPoints.Length)
             {
+                Vector3 waypoint = new Vector3(m_pathConfig.PathPoints[m_waypointIndex].x, transform.position.y, m_pathConfig.PathPoints[m_waypointIndex].z);
                 //turn + move
-                transform.forward = Vector3.RotateTowards(transform.forward, m_pathConfig.PathPoints[m_waypointIndex] - transform.position, m_speed * Time.deltaTime, 0.0f);
-                transform.position = Vector3.MoveTowards(transform.position, m_pathConfig.PathPoints[m_waypointIndex], m_speed * Time.deltaTime);
+                transform.forward = Vector3.RotateTowards(transform.forward, waypoint - transform.position, m_speed * Time.deltaTime, 0.0f);
+                transform.position = Vector3.MoveTowards(transform.position, waypoint, m_speed * Time.deltaTime);
 
-                if (transform.position == m_pathConfig.PathPoints[m_waypointIndex])
+                if (transform.position == waypoint)     //m_pathConfig.PathPoints[m_waypointIndex])
                 {
                     m_waypointIndex++;
                 }
