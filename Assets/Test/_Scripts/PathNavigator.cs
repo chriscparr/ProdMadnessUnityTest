@@ -5,31 +5,37 @@ using UnityEngine.AI;
 
 public class PathNavigator : MonoBehaviour {
 
-    private Rigidbody m_carRigidBody;
-    private int m_waypointIndex = 0;
+    public float Progress { get { return (m_progress / (m_pathConfig.PathPoints.Length * 4f)); } }
+    private int m_progress;
+
+    private PlayerConfigJSON m_playerConfig;
+    public PlayerConfigJSON PlayerConfig { get { return m_playerConfig; } set { m_playerConfig = value; } }
+
     [SerializeField]
     private PathConfig m_pathConfig;
-    [SerializeField]
-    private int m_speed = 20;
-    private int m_laps;
-
+    private int m_laps = 0;
+    private int m_waypointIndex = 0;
     private NavMeshAgent m_agent;
 
     private void Awake()
     {
-        m_carRigidBody = GetComponent<Rigidbody>();
+        m_progress = 0;
         m_agent = GetComponent<NavMeshAgent>();
         m_agent.autoBraking = false;
     }
 
-    private void Start()
+    public void StartRace()
     {
+        m_agent.speed = (float)m_playerConfig.Velocity;
+        m_agent.angularSpeed = (float)m_playerConfig.Velocity * 3f;
+        m_agent.acceleration = (float)m_playerConfig.Velocity * 2f;
         GotoNextPoint();
     }
-
+    
     private void GotoNextPoint()
     {
         m_waypointIndex++;
+        m_progress = (m_laps * m_pathConfig.PathPoints.Length) + m_waypointIndex;
         if (m_waypointIndex < m_pathConfig.PathPoints.Length)
         {
             m_agent.destination = m_pathConfig.PathPoints[m_waypointIndex];
@@ -40,14 +46,13 @@ public class PathNavigator : MonoBehaviour {
             m_laps++;
             m_agent.destination = m_pathConfig.PathPoints[m_waypointIndex];
         }
-        //Debug.Log("<color=#ffff00>Going to wapoint " + m_waypointIndex.ToString() + "</color>");
+        Debug.Log("<color=#ffff00>Progress = " + (Progress*100f).ToString() + "</color>");
     }
 
     private void Update()
     {
         if (m_agent.remainingDistance < 13f)
         {
-            //Debug.Log("<color=#ffff00>Going to next wapoint!</color>");
             GotoNextPoint();
         }
     }
