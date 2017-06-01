@@ -11,21 +11,38 @@ public class GameManager : MonoBehaviour {
 
     private List<PathNavigator> m_racers = new List<PathNavigator>();
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    private void Start ()
+    {
+        BeginRace();
+
+    }
+
+    private void BeginRace()
+    {
+        for(int i = 0; i < 8; i++)
+        {
+            Invoke("SpawnCar", 1f * i);
+        }
+    }
+
+    private void SpawnCar()
+    {
+        m_racers.Add(Instantiate<PathNavigator>(m_pathNavPrefab));
+        PlayerConfigJSON dummyConfig = new PlayerConfigJSON();
+        dummyConfig.Name = "Test_" + (m_racers.Count - 1).ToString();
+        dummyConfig.Velocity = Random.Range(20, 40);
+        m_racers[m_racers.Count - 1].PlayerConfig = dummyConfig;
+        m_racers[m_racers.Count - 1].StartRace();
+        Debug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update ()
+    {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            m_racers.Add(Instantiate<PathNavigator>(m_pathNavPrefab));
-            PlayerConfigJSON dummyConfig = new PlayerConfigJSON();
-            dummyConfig.Name = "Test_" + (m_racers.Count - 1).ToString();
-            dummyConfig.Velocity = Random.Range(20, 40);
-            m_racers[m_racers.Count - 1].PlayerConfig = dummyConfig;
-            Debug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
+            SpawnCar();
         }
 	}
 }

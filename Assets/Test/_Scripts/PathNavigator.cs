@@ -26,7 +26,9 @@ public class PathNavigator : MonoBehaviour {
 
     public void StartRace()
     {
-        m_agent.speed = m_playerConfig.Velocity;
+        m_agent.speed = (float)m_playerConfig.Velocity;
+        m_agent.angularSpeed = (float)m_playerConfig.Velocity * 3f;
+        m_agent.acceleration = (float)m_playerConfig.Velocity * 2f;
         GotoNextPoint();
     }
     
@@ -49,7 +51,7 @@ public class PathNavigator : MonoBehaviour {
 
     private void Update()
     {
-        if (m_agent.remainingDistance < 5f)
+        if (m_agent.remainingDistance < 13f)
         {
             GotoNextPoint();
         }
