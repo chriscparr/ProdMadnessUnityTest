@@ -7,9 +7,11 @@ using System.Linq;
 public class GameManager : MonoBehaviour {
     [SerializeField]
     private PathNavigator m_pathNavPrefab;
+    [SerializeField]
+    private Camera m_followCam;
 
     //private PlayerConfigJSON[] m_playerConfigs;
-   // public PlayerConfigJSON[] PlayerConfigs { get { return m_playerConfigs; }set { m_playerConfigs = value; } }
+    // public PlayerConfigJSON[] PlayerConfigs { get { return m_playerConfigs; }set { m_playerConfigs = value; } }
 
     private List<PathNavigator> m_racers = new List<PathNavigator>();
     private DataJSON m_gameData;
@@ -69,6 +71,8 @@ public class GameManager : MonoBehaviour {
         m_racers[m_racers.Count - 1].PlayerConfig = m_playerConfigs[m_racers.Count - 1];
         m_racers[m_racers.Count - 1].StartRace();
         Debug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
+        UnityStandardAssets.Utility.SmoothFollow camFollow = m_followCam.GetComponent<UnityStandardAssets.Utility.SmoothFollow>();
+        camFollow.target = m_racers[m_racers.Count - 1].transform;
     }
 	
 	// Update is called once per frame
