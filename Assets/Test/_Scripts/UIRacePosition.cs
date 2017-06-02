@@ -22,7 +22,7 @@ public class UIRacePosition : MonoBehaviour {
     private PathNavigator m_pathNav;
     public void SetRank(int a_rank)
     {
-        m_rankDisplay.text = a_rank.ToString();
+        m_rankDisplay.text = (a_rank + 1).ToString();
     }
 
     public void SetConfig(PathNavigator a_pathNav)
@@ -33,13 +33,36 @@ public class UIRacePosition : MonoBehaviour {
         ColorUtility.TryParseHtmlString(m_pathNav.PlayerConfig.Color, out m_configColor);
         m_nameDisplay.color = m_configColor;
         m_rankDisplay.color = m_configColor;
+        m_progressBarDisplay.color = m_configColor;
 
+        switch(m_pathNav.PlayerConfig.Icon)
+        {
+            case "http://image0.flaticon.com/icons/png/128/70/70078.png":
+                m_iconDisplay.sprite = m_icons[1];
+                break;
+            case "http://downloadicons.net/sites/default/files/random-user-icon-15571.png":
+                m_iconDisplay.sprite = m_icons[4];
+                break;
+            case "http://icons.iconarchive.com/icons/iconka/meow/256/cat-purr-icon.png":
+                m_iconDisplay.sprite = m_icons[3];
+                break;
+            case "http://www.freeiconspng.com/uploads/cat-icon-9.png":
+                m_iconDisplay.sprite = m_icons[2];
+                break;
+            case "http://www.sucaijiayuan.com/uploads/file/content/2015/03/550bc3fb48342.png":
+                m_iconDisplay.sprite = m_icons[0];
+                break;
+            default:
+                m_iconDisplay.sprite = m_icons[0];
+                break;
+        }
     }
 
     private void Update()
     {
-        m_progressBarDisplay.rectTransform.localScale = new Vector3(m_pathNav.Progress, 1f, 1f);
-
-       // m_pathNav.Progress
+        if(m_pathNav != null)
+        {
+            m_progressBarDisplay.rectTransform.localScale = new Vector3(m_pathNav.Progress, 1f, 1f);
+        }
     }
 }

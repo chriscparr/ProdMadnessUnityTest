@@ -1,34 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
     [SerializeField]
     private UIRacePosition[] m_positionSlots;
+    [SerializeField]
+    private GameObject m_gameOverPanel;
+
+    public bool GameOverPanelActive { get { return m_gameOverPanel.activeSelf; } set { m_gameOverPanel.SetActive(value); } }
 
     private List<PathNavigator> m_players = new List<PathNavigator>();
-
+    private bool m_isPlaying = false;
     public void AddNewPlayer(PathNavigator a_pathNav)
     {
         m_players.Add(a_pathNav);
     }
 
 	// Use this for initialization
-	void Start () {
-		
-	}
+	public void StartRace ()
+    {
+        //m_gameOverPanel.SetActive(false);
+        m_isPlaying = true;
+    }
+
+    public void EndRace()
+    {
+        if(m_isPlaying)
+        {
+            m_gameOverPanel.SetActive(true);
+            m_isPlaying = false;            
+        }
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
-        if(m_players.Count > 1)
+        if(m_players.Count > 1 && m_isPlaying)
         {
             for (int i = 0; i < m_players.Count - 1; i++)
             {
-                if(m_players[i].Progress >= 100f)
+                if(m_players[i].Progress >= 1f)
                 {
+                    EndRace();
                     //maybe stop cars, but definitely toggle reset popup visibility
+                    /*
+                    if (!m_gameOverPanel.activeSelf)
+                    {
+                    }
+                    */
                 }
                 if(m_players[i].Progress < m_players[i+1].Progress)
                 {

@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
     private Camera m_followCam;
     [SerializeField]
     private UIManager m_uiManager;
+    
+    
 
     //private PlayerConfigJSON[] m_playerConfigs;
     // public PlayerConfigJSON[] PlayerConfigs { get { return m_playerConfigs; }set { m_playerConfigs = value; } }
@@ -40,8 +42,19 @@ public class GameManager : MonoBehaviour {
 
     private void Start ()
     {
-        BeginRace();
+       // BeginRace();
+    }
 
+    public void NewRace()
+    {
+        foreach(PathNavigator p in m_racers)
+        {
+            Destroy(p.gameObject);
+        }
+        m_racers.Clear();
+        //m_uiManager.GameOverPanelActive = false;
+        BeginRace();
+        m_uiManager.StartRace();
     }
 
     private void BeginRace()
@@ -51,8 +64,7 @@ public class GameManager : MonoBehaviour {
         {
             m_playerConfigs.Add(m_gameData.Players[Random.Range(0, m_gameData.Players.Length)]);
         }
-        m_playerConfigs = m_playerConfigs.OrderBy(o => o.Velocity).ToList();   //.OrderByDescending(o => o.Velocity).ToList();
-        //m_playerConfigs.Sort();
+        m_playerConfigs = m_playerConfigs.OrderBy(o => o.Velocity).ToList();
 
         for(int i = 0; i < m_playerConfigs.Count; i++)
         {
