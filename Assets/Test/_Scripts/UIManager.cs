@@ -19,10 +19,8 @@ public class UIManager : MonoBehaviour {
         m_players.Add(a_pathNav);
     }
 
-	// Use this for initialization
 	public void StartRace ()
     {
-        //m_gameOverPanel.SetActive(false);
         m_isPlaying = true;
     }
 
@@ -35,10 +33,8 @@ public class UIManager : MonoBehaviour {
         }
     }
 	
-	// Update is called once per frame
-	void Update ()
+	private void Update ()
     {
-
         if(m_players.Count > 1 && m_isPlaying)
         {
             for (int i = 0; i < m_players.Count - 1; i++)
@@ -46,12 +42,6 @@ public class UIManager : MonoBehaviour {
                 if(m_players[i].Progress >= 1f)
                 {
                     EndRace();
-                    //maybe stop cars, but definitely toggle reset popup visibility
-                    /*
-                    if (!m_gameOverPanel.activeSelf)
-                    {
-                    }
-                    */
                 }
                 if(m_players[i].Progress < m_players[i+1].Progress)
                 {

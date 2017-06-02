@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PathNavigator : MonoBehaviour {
+public class PathNavigator : MonoBehaviour
+{
 
-    //[SerializeField]
-    //private Color m_carColor;
     [SerializeField]
     private MeshRenderer[] m_carRenderers;
 
@@ -57,7 +56,6 @@ public class PathNavigator : MonoBehaviour {
             m_laps++;
             m_agent.destination = m_pathConfig.PathPoints[m_waypointIndex];
         }
-        //Debug.Log("<color=#ffff00>Progress = " + (Progress*100f).ToString() + "</color>");
     }
 
     private void Update()
