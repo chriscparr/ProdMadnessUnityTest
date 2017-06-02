@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
     private PathNavigator m_pathNavPrefab;
     [SerializeField]
     private Camera m_followCam;
+    [SerializeField]
+    private UIManager m_uiManager;
 
     //private PlayerConfigJSON[] m_playerConfigs;
     // public PlayerConfigJSON[] PlayerConfigs { get { return m_playerConfigs; }set { m_playerConfigs = value; } }
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour {
         {
             m_playerConfigs.Add(m_gameData.Players[Random.Range(0, m_gameData.Players.Length)]);
         }
-        m_playerConfigs = m_playerConfigs.OrderByDescending(o => o.Velocity).ToList();
+        m_playerConfigs = m_playerConfigs.OrderBy(o => o.Velocity).ToList();   //.OrderByDescending(o => o.Velocity).ToList();
         //m_playerConfigs.Sort();
 
         int secs = m_gameData.GameConfiguration.playersInstantiationDelay / 1000;
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour {
         m_racers[m_racers.Count - 1].PlayerConfig = dummyConfig;
         */
         m_racers[m_racers.Count - 1].PlayerConfig = m_playerConfigs[m_racers.Count - 1];
+        m_uiManager.AddNewPlayer(m_racers[m_racers.Count - 1]);
         m_racers[m_racers.Count - 1].StartRace();
         Debug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
         if(m_racers.Count == 1)

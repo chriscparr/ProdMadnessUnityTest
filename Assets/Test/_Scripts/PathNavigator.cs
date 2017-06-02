@@ -46,7 +46,7 @@ public class PathNavigator : MonoBehaviour {
             m_laps++;
             m_agent.destination = m_pathConfig.PathPoints[m_waypointIndex];
         }
-        Debug.Log("<color=#ffff00>Progress = " + (Progress*100f).ToString() + "</color>");
+        //Debug.Log("<color=#ffff00>Progress = " + (Progress*100f).ToString() + "</color>");
     }
 
     private void Update()
