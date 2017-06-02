@@ -76,11 +76,15 @@ public class GameManager : MonoBehaviour {
         m_uiManager.AddNewPlayer(m_racers[m_racers.Count - 1]);
         m_racers[m_racers.Count - 1].StartRace();
         Debug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
-        if(m_racers.Count == 1)
+        
+        
+        UnityStandardAssets.Utility.SmoothFollow camFollow = m_followCam.GetComponent<UnityStandardAssets.Utility.SmoothFollow>();
+        camFollow.target = m_racers[m_racers.Count - 1].transform;
+        /*
+        if (m_racers.Count == 1)
         {
-            UnityStandardAssets.Utility.SmoothFollow camFollow = m_followCam.GetComponent<UnityStandardAssets.Utility.SmoothFollow>();
-            camFollow.target = m_racers[m_racers.Count - 1].transform;
         }
+        */
     }
 	
 	// Update is called once per frame

@@ -16,6 +16,8 @@ public class UIRacePosition : MonoBehaviour {
     private Text m_rankDisplay;
     [SerializeField]
     private Image m_progressBarDisplay;
+
+    private Color m_configColor;
     
     public void SetRank(int a_rank)
     {
@@ -26,5 +28,8 @@ public class UIRacePosition : MonoBehaviour {
     {
         m_iconDisplay.sprite = m_icons[0];
         m_nameDisplay.text = a_pathNav.PlayerConfig.Name;
+        ColorUtility.TryParseHtmlString(a_pathNav.PlayerConfig.Color, out m_configColor);
+        m_nameDisplay.color = m_configColor;
+        m_rankDisplay.color = m_configColor;
     }
 }

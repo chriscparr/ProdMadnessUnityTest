@@ -5,6 +5,11 @@ using UnityEngine.AI;
 
 public class PathNavigator : MonoBehaviour {
 
+    //[SerializeField]
+    //private Color m_carColor;
+    [SerializeField]
+    private MeshRenderer[] m_carRenderers;
+
     public float Progress { get { return (m_progress / (m_pathConfig.PathPoints.Length * 4f)); } }
     private int m_progress;
 
@@ -29,6 +34,12 @@ public class PathNavigator : MonoBehaviour {
         m_agent.speed = (float)m_playerConfig.Velocity;
         m_agent.angularSpeed = (float)m_playerConfig.Velocity * 3f;
         m_agent.acceleration = (float)m_playerConfig.Velocity * 2f;
+        Color configColor = Color.white;
+        ColorUtility.TryParseHtmlString(m_playerConfig.Color, out configColor);
+        foreach(MeshRenderer rend in m_carRenderers)
+        {
+            rend.material.color = configColor;
+        }
         GotoNextPoint();
     }
     

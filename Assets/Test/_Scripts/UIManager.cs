@@ -26,6 +26,10 @@ public class UIManager : MonoBehaviour {
         {
             for (int i = 0; i < m_players.Count - 1; i++)
             {
+                if(m_players[i].Progress >= 100f)
+                {
+                    //maybe stop cars, but definitely toggle reset popup visibility
+                }
                 if(m_players[i].Progress < m_players[i+1].Progress)
                 {
                     PathNavigator temp = m_players[i];

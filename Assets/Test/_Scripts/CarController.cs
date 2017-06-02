@@ -44,7 +44,7 @@ public class CarController : MonoBehaviour {
     {
         if(gameObject.transform.position != m_pathConfig.PathPoints[m_waypointIndex])
         {
-            Vector3 waypoint = m_pathConfig.PathPoints[m_waypointIndex];
+           // Vector3 waypoint = m_pathConfig.PathPoints[m_waypointIndex];
 
            //s m_steer = Mathf.Tan()
 
