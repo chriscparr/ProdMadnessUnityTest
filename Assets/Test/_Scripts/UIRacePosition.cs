@@ -18,7 +18,6 @@ public class UIRacePosition : MonoBehaviour {
     private Image m_progressBarDisplay;
 
     private Color m_configColor;
-    private int m_progressBarInitWidth = 150;
     private PathNavigator m_pathNav;
     public void SetRank(int a_rank)
     {
