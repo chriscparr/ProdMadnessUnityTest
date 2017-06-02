@@ -18,6 +18,7 @@ public class UIRacePosition : MonoBehaviour {
     private Image m_progressBarDisplay;
 
     private Color m_configColor;
+    private int m_progressBarInitWidth = 150;
     
     public void SetRank(int a_rank)
     {
@@ -31,5 +32,6 @@ public class UIRacePosition : MonoBehaviour {
         ColorUtility.TryParseHtmlString(a_pathNav.PlayerConfig.Color, out m_configColor);
         m_nameDisplay.color = m_configColor;
         m_rankDisplay.color = m_configColor;
+
     }
 }

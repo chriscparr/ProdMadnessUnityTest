@@ -28,12 +28,13 @@ public class GameManager : MonoBehaviour {
         reader.Close();
 
         m_gameData = JsonUtility.FromJson<DataJSON>(m_jsonData);
-
+        /*
         Debug.Log("GameConfig - laps = " + m_gameData.GameConfiguration.lapsNumber.ToString() + " delay = " + m_gameData.GameConfiguration.playersInstantiationDelay.ToString());
         foreach (PlayerConfigJSON p in m_gameData.Players)
         {
             Debug.Log("Player - Name:" + p.Name + " Velocity:" + p.Velocity + " Color:" + p.Color + " Icon:" + p.Icon);
         }
+        */
     }
     
 
@@ -53,6 +54,11 @@ public class GameManager : MonoBehaviour {
         m_playerConfigs = m_playerConfigs.OrderBy(o => o.Velocity).ToList();   //.OrderByDescending(o => o.Velocity).ToList();
         //m_playerConfigs.Sort();
 
+        for(int i = 0; i < m_playerConfigs.Count; i++)
+        {
+            Debug.Log("player " + i.ToString() + " , speed : " + m_playerConfigs[i].Velocity);
+        }
+       
         int secs = m_gameData.GameConfiguration.playersInstantiationDelay / 1000;
         
         for (int i = 0; i < 8; i++)
@@ -66,16 +72,11 @@ public class GameManager : MonoBehaviour {
     private void SpawnCar()
     {
         m_racers.Add(Instantiate<PathNavigator>(m_pathNavPrefab));
-        /*
-        PlayerConfigJSON dummyConfig = new PlayerConfigJSON();
-        dummyConfig.Name = "Test_" + (m_racers.Count - 1).ToString();
-        dummyConfig.Velocity = Random.Range(20, 40);
-        m_racers[m_racers.Count - 1].PlayerConfig = dummyConfig;
-        */
+
         m_racers[m_racers.Count - 1].PlayerConfig = m_playerConfigs[m_racers.Count - 1];
         m_uiManager.AddNewPlayer(m_racers[m_racers.Count - 1]);
         m_racers[m_racers.Count - 1].StartRace();
-        Debug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
+        //sDebug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
         
         
         UnityStandardAssets.Utility.SmoothFollow camFollow = m_followCam.GetComponent<UnityStandardAssets.Utility.SmoothFollow>();
@@ -87,12 +88,5 @@ public class GameManager : MonoBehaviour {
         */
     }
 	
-	// Update is called once per frame
-	private void Update ()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnCar();
-        }
-	}
+	
 }
