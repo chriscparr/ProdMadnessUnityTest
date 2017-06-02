@@ -7,9 +7,15 @@ using System.Linq;
 public class GameManager : MonoBehaviour {
     [SerializeField]
     private PathNavigator m_pathNavPrefab;
+    [SerializeField]
+    private Camera m_followCam;
+    [SerializeField]
+    private UIManager m_uiManager;
+    
+    
 
     //private PlayerConfigJSON[] m_playerConfigs;
-   // public PlayerConfigJSON[] PlayerConfigs { get { return m_playerConfigs; }set { m_playerConfigs = value; } }
+    // public PlayerConfigJSON[] PlayerConfigs { get { return m_playerConfigs; }set { m_playerConfigs = value; } }
 
     private List<PathNavigator> m_racers = new List<PathNavigator>();
     private DataJSON m_gameData;
@@ -24,19 +30,31 @@ public class GameManager : MonoBehaviour {
         reader.Close();
 
         m_gameData = JsonUtility.FromJson<DataJSON>(m_jsonData);
-
+        /*
         Debug.Log("GameConfig - laps = " + m_gameData.GameConfiguration.lapsNumber.ToString() + " delay = " + m_gameData.GameConfiguration.playersInstantiationDelay.ToString());
         foreach (PlayerConfigJSON p in m_gameData.Players)
         {
             Debug.Log("Player - Name:" + p.Name + " Velocity:" + p.Velocity + " Color:" + p.Color + " Icon:" + p.Icon);
         }
+        */
     }
     
 
     private void Start ()
     {
-        BeginRace();
+       // BeginRace();
+    }
 
+    public void NewRace()
+    {
+        foreach(PathNavigator p in m_racers)
+        {
+            Destroy(p.gameObject);
+        }
+        m_racers.Clear();
+        //m_uiManager.GameOverPanelActive = false;
+        BeginRace();
+        m_uiManager.StartRace();
     }
 
     private void BeginRace()
@@ -46,37 +64,41 @@ public class GameManager : MonoBehaviour {
         {
             m_playerConfigs.Add(m_gameData.Players[Random.Range(0, m_gameData.Players.Length)]);
         }
-        m_playerConfigs = m_playerConfigs.OrderByDescending(o => o.Velocity).ToList();
-        //m_playerConfigs.Sort();
+        m_playerConfigs = m_playerConfigs.OrderBy(o => o.Velocity).ToList();
 
+        for(int i = 0; i < m_playerConfigs.Count; i++)
+        {
+            Debug.Log("player " + i.ToString() + " , speed : " + m_playerConfigs[i].Velocity);
+        }
+       
         int secs = m_gameData.GameConfiguration.playersInstantiationDelay / 1000;
         
         for (int i = 0; i < 8; i++)
         {
             Invoke("SpawnCar", secs * i);
         }
+        //UnityStandardAssets.Utility.SmoothFollow camFollow = m_followCam.GetComponent<UnityStandardAssets.Utility.SmoothFollow>();
+        //camFollow.target = m_racers[0].transform;
     }
 
     private void SpawnCar()
     {
         m_racers.Add(Instantiate<PathNavigator>(m_pathNavPrefab));
-        /*
-        PlayerConfigJSON dummyConfig = new PlayerConfigJSON();
-        dummyConfig.Name = "Test_" + (m_racers.Count - 1).ToString();
-        dummyConfig.Velocity = Random.Range(20, 40);
-        m_racers[m_racers.Count - 1].PlayerConfig = dummyConfig;
-        */
+
         m_racers[m_racers.Count - 1].PlayerConfig = m_playerConfigs[m_racers.Count - 1];
+        m_uiManager.AddNewPlayer(m_racers[m_racers.Count - 1]);
         m_racers[m_racers.Count - 1].StartRace();
-        Debug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
+        //sDebug.Log("<color=#44ff00>Racer " + m_racers[m_racers.Count - 1].PlayerConfig.Name + " GO!</color>");
+        
+        
+        UnityStandardAssets.Utility.SmoothFollow camFollow = m_followCam.GetComponent<UnityStandardAssets.Utility.SmoothFollow>();
+        camFollow.target = m_racers[m_racers.Count - 1].transform;
+        /*
+        if (m_racers.Count == 1)
+        {
+        }
+        */
     }
 	
-	// Update is called once per frame
-	private void Update ()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnCar();
-        }
-	}
+	
 }

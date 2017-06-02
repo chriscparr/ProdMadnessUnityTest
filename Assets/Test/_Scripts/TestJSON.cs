@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 
 public class TestJSON : MonoBehaviour {
-
+    /*
     private string m_jsonData;
     private string m_path = "Assets/StreamingAssets/Data.txt";
     private void Awake()
@@ -21,7 +21,7 @@ public class TestJSON : MonoBehaviour {
             Debug.Log("Player - Name:" + p.Name + " Velocity:" + p.Velocity + " Color:" + p.Color + " Icon:" + p.Icon);
         }
     }
-
+    */
 }
 
 
